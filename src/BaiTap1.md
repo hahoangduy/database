@@ -147,6 +147,8 @@ create table school (
 
 );
 
+
+
 create table class (
 
    class_id int primary key,
@@ -164,6 +166,7 @@ create table class (
 );
 
 
+
 create table student (
 
    student_id int primary key,
@@ -179,6 +182,8 @@ create table student (
    class_id int not null
 
 );
+
+
 
 create table teacher (
 
@@ -198,12 +203,16 @@ create table teacher (
 
 );
 
+
+
 create table classInfor (
 
    class_id int,
    
    teacher_id int
+   
 );
+
 
 
 alter table classinfor
@@ -211,9 +220,11 @@ alter table classinfor
 add primary key(class_id, teacher_id);
 
 
+
 alter table school
 
 add primary key(school_id);
+
 
 
 alter table class
@@ -223,11 +234,13 @@ add constraint fk_teacher_id
 foreign key(teacher_id) references teacher(teacher_id);
 
 
+
 alter table class
 
 add constraint fk_school_id
 
 foreign key(school_id) references school(school_id);
+
 
 
 alter table teacher
@@ -237,11 +250,13 @@ add constraint fk_school_id_teacher
 foreign key(school_id) references school(school_id);
 
 
+
 alter table student
 
 add constraint fk_class_id_
 
 foreign key(class_id) references class(class_id);
+
 
 
 insert into school
@@ -254,6 +269,7 @@ values
 (3, "Truong Vinh Ky", "Dak Nong", "Cap 3", "2003-05-14")
 
 
+
 insert into class
 
 values
@@ -262,6 +278,7 @@ values
 (2, "9A2", "Khoi 9", "2024", 1, 2),
 
 (3, "12A3", "Khoi 12", "2025", 3, 3);
+
 
 
 insert into teacher
@@ -274,6 +291,7 @@ values
 (3, "Ha Hoang C", "2005-11-06", "Nam", "Hoa", 5678, 3);
 
 
+
 insert into student
 
 values 
@@ -284,13 +302,16 @@ values
 (3, "Tran Nhat C", "2009-12-09", "Nam", "Dak Nong", 3);
 
 
+
 insert into classinfor
+
 values 
 (2, 3),
 
 (1, 2),
 
 (3, 1);
+
 
 
 select * from school;
