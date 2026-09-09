@@ -38,6 +38,8 @@ Table: ...
 
 
 Bài làm:
+<img width="1285" height="767" alt="Screenshot 2026-09-09 101118" src="https://github.com/user-attachments/assets/a6b78f76-18f6-4970-8471-2d7c428d68ab" />
+
 Lên trang web dbdiagram.io
 paste code:
 
