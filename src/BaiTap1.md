@@ -314,6 +314,21 @@ values
 
 (3, 1);
 
+insert into student
+
+values 
+(4, "Nguyen Hai Nam", "2018-02-3", "Nam", "Dak Nong", 1),
+
+(5, "Hoang Thanh Truc", "2018-05-12", "Nu", "Dak Nong", 1),
+
+(6, "Phan Huu Tai", "2010-01-17", "Nam", "Dak Nong", 3),
+
+(7, "Vu Le Thanh", "2017-08-23", "Nam", "Dak Nong", 1),
+
+(8, "Le Thi Yen Nhi", "2012-04-25", "Nu", "Dak Nong", 2),
+
+(9, "Nguyen Dinh Thien", "2011-07-29", "Nam", "Dak Nong", 3);
+
 
 
 select * from school;
