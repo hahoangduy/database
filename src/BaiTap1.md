@@ -133,6 +133,8 @@ CODE:
 
 create database mySchool;
 
+
+
 create table school (
 
    school_id int,
