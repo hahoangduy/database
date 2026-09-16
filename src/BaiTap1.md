@@ -24,6 +24,9 @@ Ngược lại, một Lớp sẽ được dạy bởi nhiều Giáo viên khác 
 Dựa vào dữ kiện trên, bạn hãy viết ra thiết kế của bạn. Bạn không cần viết code CREATE TABLE vội (nếu muốn viết cũng được), 
 chỉ cần liệt kê theo format giống như sau để mình xem tư duy đặt Khóa của bạn đã chuẩn chưa:
 
+- In danh sách lớp và tên học sinh của lớp đó
+- In danh sách những giáo viên dạy toán
+
 Ví dụ định dạng bạn có thể trả lời:
 
 Table: Truong
@@ -360,6 +363,19 @@ group by class_id order by so_luong_hoc_sinh asc
 
 limit 1;
 
+
+- In danh sách lớp và học sinh của lớp đó:
+
+select class_name, student_name from class
+
+inner join student on student.class_id = class.class_id;
+
+
+- In danh sách giáo viên dạy toán:
+
+select * from teacher
+
+where teacher.teacher_major = "Toan";
 
 
 select * from school;
