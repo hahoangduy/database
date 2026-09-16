@@ -170,6 +170,69 @@ VD: table_id nvarchar(10),
    #### WHERE column_name = ...;
 
 
+### JOINS:
+
+1. INNER JOIN
+
+   #### SELECT column_name from table_name1
+
+   #### INNER JOIN table_name2 ON table2.fk = table1.pk;
+
+2. LEFT JOIN
+
+   #### SELECT column_name from table_name1
+
+   #### LEFT JOIN table_name2 ON table2.fk = table1.pk;
+
+3. RIGHT JOIN
+
+   #### SELECT column_name from table_name1
+
+   #### RIGHT JOIN table_name2 ON table2.fk = table1.pk;
+
+
+### ORDER BY, LIMIT:
+
+1. ORDER BY
+
+   - ASC: A -> Z
+     
+     SELECT * FROM table_name
+
+     ORDER BY column_name ASC;
+
+   - DESC: Z -> A
+
+     SELECT * FROM table_name
+
+     ORDER BY column_name DESC;
+
+2. LIMIT
+
+   - Dùng để giới hạn bản ghi muốn lấy.
+  
+
+### UNION:
+
+- Các số cột phải bằng nhau.
+
+
+#### SELECT * FROM table_name1
+
+#### UNION
+
+#### SELECT * FROM table_name2;
+
+
+### VIEW:
+
+#### CREATE VIEW create_column_name AS
+
+#### SELECT column_name FROM table_name;
+
+
+#### SELECT * FROM create_column_name;
+
 
 ## NORMAL FORM
 
