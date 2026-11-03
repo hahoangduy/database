@@ -1,4 +1,3 @@
-
 create table school (
 	school_id int,
     school_name varchar(20),
@@ -271,3 +270,6 @@ JOIN (
     GROUP BY school_id
 ) AS t2 ON t1.school_id = t2.school_id
 		    AND t1.SiSoLop = t2.MaxSiSo;
+
+
+
