@@ -154,3 +154,62 @@ Ref: teacher.id <? classInfor.teacher_id
 
 12. Xếp hạng các lớp theo sĩ số trong từng trường, sau đó chỉ lấy lớp đông nhất của mỗi trường.
 
+bài mới sẽ có thêm các câu dữ liệu này
+
+-- Xóa các dòng phân công "ma" (lớp không tồn tại) 
+
+DELETE FROM classinfor 
+
+WHERE class_id 
+
+NOT IN (SELECT class_id FROM class);  
+
+INSERT INTO school 
+
+   VALUES   (4, 'Nguyen Du', 'Dak Lak', 'Cap 2', '2010-09-05'),
+
+            (5, 'Le Loi',    'Dak Lak', 'Cap 1', '2015-08-20');   
+
+-- trường không có lớp  
+
+INSERT INTO class 
+
+   VALUES   (6, '6A1', 'Khoi 6', 2025, 3, 4),
+
+            (7, '7A2', 'Khoi 7', 2025, 5, 4);  
+
+-- lớp 7 không có học sinh  
+
+INSERT INTO student 
+
+   VALUES   (10, 'Do Minh Khoa',  '2014-03-15', 'Nam', 'Dak Lak',  6),
+
+            (11, 'Pham Thu Ha',   '2014-11-02', 'Nu',  'Dak Lak',  6),   
+
+            (12, 'Tran Bao Ngoc', '2018-04-12', 'Nu',  'Dak Nong', 1);  
+
+-- trùng ngày sinh với học sinh 1  
+
+INSERT INTO classinfor 
+
+   VALUES (6, 4),
+          (6, 5),
+          (3, 6);
+
+Bài 1. Liệt kê giáo viên kèm cột NhomTuoi: dưới 25 tuổi là 'Tre', từ 25 đến 30 là 'Trung binh', trên 30 là 'Lon'.
+
+Bài 2. Với mỗi trường, đếm số giáo viên theo chuyên môn, hiển thị thành 3 cột riêng: SoGVToan, SoGVLy, SoGVHoa. Trường không có giáo viên vẫn hiện số 0.
+
+Bài 3. Tìm học sinh sinh vào quý 1 (tháng 1, 2, 3).
+
+Bài 4. Tìm học sinh có sinh nhật trong tháng hiện tại.
+
+Bài 8. Tạo danh sách tất cả mọi người trong hệ thống gồm 3 cột: Ten, NgaySinh, VaiTro ('Hoc sinh' hoặc 'Giao vien'). Sắp xếp theo ngày sinh.  
+
+Bài 9. Liệt kê các địa chỉ xuất hiện trong bảng school và bảng student. Chạy bằng UNION rồi bằng UNION ALL, so sánh số dòng và giải thích vì sao khác nhau.
+
+Bài 10. Tìm các trường có ít nhất một giáo viên dạy Toán.  
+
+Bài 11. Tìm học sinh sinh trước tất cả học sinh của lớp 5A.
+
+Bài 12. Tìm lớp có nhiều giáo viên dạy nhất (dựa vào classinfor). Nếu có nhiều lớp bằng nhau thì hiện hết.

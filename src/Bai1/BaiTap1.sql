@@ -272,4 +272,102 @@ JOIN (
 		    AND t1.SiSoLop = t2.MaxSiSo;
 
 
+-- Xóa các dòng phân công "ma" (lớp không tồn tại) 
+
+DELETE FROM classinfor 
+
+WHERE class_id 
+
+NOT IN (SELECT class_id FROM class);  
+
+INSERT INTO school 
+	VALUES   (5, 'Nguyen Du', 'Dak Lak', 'Cap 2', '2010-09-05'),
+			 (6, 'Le Loi',    'Dak Lak', 'Cap 1', '2015-08-20');   
+
+
+-- trường không có lớp  
+
+INSERT INTO class 
+	VALUES   (8, '6A1', 'Khoi 6', 2025, 3, 4),
+             (9, '7A2', 'Khoi 7', 2025, 5, 4);  
+
+
+-- lớp 7 không có học sinh  
+
+INSERT INTO student 
+	VALUES   (10, 'Do Minh Khoa',  '2014-03-15', 'Nam', 'Dak Lak',  6),
+             (11, 'Pham Thu Ha',   '2014-11-02', 'Nu',  'Dak Lak',  6),   
+             (12, 'Tran Bao Ngoc', '2018-04-12', 'Nu',  'Dak Nong', 1);  
+
+-- trùng ngày sinh với học sinh 1  
+
+INSERT INTO classinfor 
+	VALUES (6, 4),
+           (6, 5),
+           (3, 6);
+
+
+-- Bài 1. Liệt kê giáo viên kèm cột NhomTuoi: dưới 25 tuổi là 'Tre', từ 25 đến 30 là 'Trung binh', trên 30 là 'Lon'.
+
+SELECT 
+    teacher_id,
+    teacher_name,
+    teacher_bd,
+    CASE 
+        WHEN TIMESTAMPDIFF(YEAR, teacher_bd, CURDATE()) < 25 THEN 'Tre'
+        WHEN TIMESTAMPDIFF(YEAR, teacher_bd, CURDATE()) BETWEEN 25 AND 30 THEN 'Trung binh'
+        ELSE 'Lon'
+    END AS NhomTuoi
+FROM teacher;
+
+-- Bài 2. Với mỗi trường, đếm số giáo viên theo chuyên môn, hiển thị thành 3 cột riêng: SoGVToan, SoGVLy, SoGVHoa. Trường không có giáo viên vẫn hiện số 0.
+
+SELECT 
+    s.school_id,
+    s.school_name,
+    SUM(CASE WHEN t.teacher_major = 'Toan' THEN 1 ELSE 0 END) AS SoGVToan,
+    SUM(CASE WHEN t.teacher_major = 'Ly'   THEN 1 ELSE 0 END) AS SoGVLy,
+    SUM(CASE WHEN t.teacher_major = 'Hoa'  THEN 1 ELSE 0 END) AS SoGVHoa
+FROM school s
+LEFT JOIN teacher t ON s.school_id = t.school_id
+GROUP BY s.school_id, s.school_name
+ORDER BY s.school_id;
+
+-- Bài 3. Tìm học sinh sinh vào quý 1 (tháng 1, 2, 3).
+SELECT *
+FROM student
+WHERE MONTH(student_bd) IN (1, 2, 3);
+
+-- Bài 4. Tìm học sinh có sinh nhật trong tháng hiện tại.
+
+SELECT *
+FROM student
+WHERE MONTH(student_bd) = MONTH(CURDATE());
+
+-- Bài 8. Tạo danh sách tất cả mọi người trong hệ thống gồm 3 cột: Ten, NgaySinh, VaiTro ('Hoc sinh' hoặc 'Giao vien'). Sắp xếp theo ngày sinh.  
+
+SELECT student_name AS Ten, student_bd AS NgaySinh, 'Hoc sinh' AS VaiTro
+FROM student
+UNION ALL
+SELECT teacher_name, teacher_bd, 'Giao vien'
+FROM teacher
+ORDER BY NgaySinh;
+
+-- Bài 9. Liệt kê các địa chỉ xuất hiện trong bảng school và bảng student. Chạy bằng UNION rồi bằng UNION ALL, so sánh số dòng và giải thích vì sao khác nhau.
+
+SELECT school_address AS DiaChi FROM school
+UNION
+SELECT student_address FROM student;
+
+
+SELECT school_address AS DiaChi FROM school
+UNION ALL
+SELECT student_address FROM student;
+
+-- Bài 10. Tìm các trường có ít nhất một giáo viên dạy Toán.  
+
+-- Bài 11. Tìm học sinh sinh trước tất cả học sinh của lớp 5A.
+
+-- Bài 12. Tìm lớp có nhiều giáo viên dạy nhất (dựa vào classinfor). Nếu có nhiều lớp bằng nhau thì hiện hết.
+
 
