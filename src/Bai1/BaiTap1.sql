@@ -250,6 +250,27 @@ LEFT JOIN student st ON c.class_id = st.class_id
 GROUP BY sc.school_id, sc.school_name
 HAVING COUNT(st.student_id) = 0;
 
+SELECT *
+FROM school sc
+LEFT JOIN class c ON sc.school_id = c.school_id
+LEFT JOIN student st ON c.class_id = st.class_id;
+
+
+SELECT sc.*, COUNT(st.student_id)
+FROM school sc
+LEFT JOIN class c ON sc.school_id = c.school_id
+LEFT JOIN student st ON c.class_id = st.class_id
+GROUP BY sc.school_id;
+
+
+SELECT sc.*, COUNT(c.class_id)
+FROM school sc
+LEFT JOIN class c ON sc.school_id = c.school_id
+LEFT JOIN student st ON c.class_id = st.class_id
+GROUP BY sc.school_id;
+
+
+
 -- 12. Xếp hạng các lớp theo sĩ số trong từng trường, sau đó chỉ lấy lớp đông nhất của mỗi trường.
 
 SELECT t1.school_id, t1.class_id, t1.class_name, t1.SiSoLop
@@ -333,6 +354,17 @@ LEFT JOIN teacher t ON s.school_id = t.school_id
 GROUP BY s.school_id, s.school_name
 ORDER BY s.school_id;
 
+SELECT 
+    s.school_id,
+    s.school_name,
+    SUM(CASE WHEN t.teacher_major = 'Toan' THEN 1 ELSE 0 END) AS SoGVToan,
+    SUM(CASE WHEN t.teacher_major = 'Ly'   THEN 1 ELSE 0 END) AS SoGVLy,
+    SUM(CASE WHEN t.teacher_major = 'Hoa'  THEN 1 ELSE 0 END) AS SoGVHoa
+FROM school s
+LEFT JOIN teacher t ON s.school_id = t.school_id
+GROUP BY s.school_id
+ORDER BY s.school_id;
+
 -- Bài 3. Tìm học sinh sinh vào quý 1 (tháng 1, 2, 3).
 SELECT *
 FROM student
@@ -366,8 +398,48 @@ SELECT student_address FROM student;
 
 -- Bài 10. Tìm các trường có ít nhất một giáo viên dạy Toán.  
 
+SELECT s.school_id, s.school_name, SUM(CASE WHEN t.teacher_major = 'Toan' THEN 1 ELSE 0 END) AS GvDayToan
+FROM school s
+INNER JOIN teacher t ON s.school_id = t.school_id
+GROUP BY s.school_id, s.school_name
+ORDER BY s.school_id;
+
+SELECT * FROM teacher
+INNER JOIN school ON teacher.school_id = school.school_id;
+
+SELECT * FROM teacher
+INNER JOIN school ON teacher.school_id = school.school_id
+WHERE teacher.teacher_major = 'Toan';
+
+SELECT school.school_id, school.school_name, school_address
+FROM teacher
+INNER JOIN school ON teacher.school_id = school.school_id
+WHERE teacher.teacher_major = 'Toan'
+GROUP BY school.school_id;
+
 -- Bài 11. Tìm học sinh sinh trước tất cả học sinh của lớp 5A.
 
+SELECT *
+FROM student st
+WHERE st.student_bd < (
+	SELECT MIN(student_bd)
+    FROM student 
+    WHERE class_id = 1
+);
+
 -- Bài 12. Tìm lớp có nhiều giáo viên dạy nhất (dựa vào classinfor). Nếu có nhiều lớp bằng nhau thì hiện hết.
+
+SELECT c.class_id, c.class_name, COUNT(ci.teacher_id) AS SoGiaoVien
+FROM class c
+INNER JOIN classinfor ci ON c.class_id = ci.class_id
+GROUP BY c.class_id, c.class_name
+HAVING COUNT(ci.teacher_id) = (
+    SELECT MAX(gv)
+    FROM (
+        SELECT COUNT(teacher_id) AS gv
+        FROM classinfor
+        GROUP BY class_id
+    ) AS t
+);
 
 
